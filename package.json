@@ -1,7 +1,7 @@
 {
-    "name": "afridho-mongodb",
-    "version": "1.0.8",
-    "description": "A simple MongoDB client wrapper for easy database operations",
+    "name": "afridho-encrypt",
+    "version": "1.0.0",
+    "description": "A simple AES encryption and decryption utility",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
@@ -9,19 +9,13 @@
         "clean": "rm -rf dist",
         "build": "npm run clean && tsc"
     },
-    "exports": {
-        ".": {
-            "import": "./dist/index.js",
-            "require": "./dist/index.js"
-        }
-    },
     "dependencies": {
-        "mongodb": "^5.0.0",
+        "crypto-js": "^4.2.0",
         "dotenv": "^16.0.3"
     },
     "devDependencies": {
         "@types/node": "^16.0.0",
-        "@types/mongodb": "^4.0.7",
-        "typescript": "^4.5.0"
+        "@types/crypto-js": "^4.2.0",
+        "typescript": "^5.1.6"
     }
 }

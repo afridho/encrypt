@@ -1,6 +1,6 @@
-# afridho-mongodb
+# afridho-encrypt
 
-A simple and easy-to-use MongoDB client wrapper for Node.js applications. This package provides a straightforward interface for performing common database operations such as reading, inserting, updating, and deleting documents in a MongoDB collection.
+A simple and secure AES encryption and decryption utility for Node.js applications. This package provides an easy-to-use interface for encrypting and decrypting sensitive information using AES encryption.
 
 ## Table of Contents
 
@@ -8,18 +8,18 @@ A simple and easy-to-use MongoDB client wrapper for Node.js applications. This p
 -   [Setup](#setup)
 -   [Usage](#usage)
 -   [Methods](#methods)
+-   [Security Notes](#security-notes)
 -   [Requirements](#requirements)
 -   [License](#license)
 -   [Author](#author)
 -   [Contributing](#contributing)
--   [Acknowledgments](#acknowledgments)
 
 ## Installation
 
-To install the `afridho-mongodb` package, use npm:
+To install the `afridho-encrypt` package, use npm:
 
 ```bash
-npm install afridho-mongodb
+npm install afridho-encrypt
 ```
 
 ## Setup
@@ -29,120 +29,49 @@ npm install afridho-mongodb
 Before using the package, create a `.env` file in your project root with the following variables:
 
 ```env
-MONGODB_URI=your_mongodb_connection_string
-DB_NAME=your_database_name
+ENCRYPT_KEY=your_secret_encryption_key_here
+```
+
+You can use this as generate random hash:
+
+```bash
+openssl rand -base64 32
 ```
 
 ## Usage
 
 ### Basic Example
 
-Here’s a basic example of how to use the `afridho-mongodb` package:
+Here’s a basic example of how to use the `afridho-encrypt` package:
 
 ```javascript
-const ClientDB = require("afridho-mongodb");
+import { encrypt, decrypt } from "afridho-encrypt";
 
-async function main() {
-    // Create a client for a specific collection
-    const userCollection = new ClientDB("users");
+// Encrypt a string
+const sensitiveData = "My secret password";
+const encryptedText = encrypt(sensitiveData);
+console.log("Encrypted:", encryptedText);
 
-    // Insert a new user
-    await userCollection.insert({ name: "Alice", email: "alice@example.com" });
-
-    // Read all users
-    const users = await userCollection.readAll();
-    console.log(users);
-
-    // Update a user
-    await userCollection.update({ name: "Alice" }, { age: 25 });
-
-    // Delete a user
-    await userCollection.delete({ name: "Alice" });
-
-    // Close the connection
-    await userCollection.close();
-}
-
-main().catch(console.error);
+// Decrypt the string
+const decryptedText = decrypt(encryptedText);
+console.log("Decrypted:", decryptedText);
 ```
 
 ## Methods
 
-The `ClientDB` class provides the following methods for interacting with your MongoDB collection:
+Encrypts a given plain text using AES encryption.
 
--   **`connect()`**: Establishes a connection to the MongoDB database.
+#### Parameters
 
--   **`read(query)`**: Reads a single document from the collection based on the provided query.
+-   `text` (string): The plain text to encrypt
 
-    ```javascript
-    const user = await userCollection.read({ name: "Alice" });
-    console.log(user);
-    ```
+#### Returns
 
--   **`readAll()`**: Reads all documents from the collection.
-
-    ```javascript
-    const users = await userCollection.readAll();
-    console.log(users);
-    ```
-
--   **`insert(data)`**: Inserts a new document into the collection.
-
-    ```javascript
-    await userCollection.insert({ name: "Bob", email: "bob@example.com" });
-    ```
-
--   **`insertMany(data)`**: Inserts multiple documents into the collection.
-
-    ```javascript
-    await userCollection.insertMany([
-        { name: "Charlie", email: "charlie@example.com" },
-        { name: "David", email: "david@example.com" },
-    ]);
-    ```
-
--   **`update(query, data)`**: Updates a document in the collection based on the provided query.
-
-    ```javascript
-    await userCollection.update({ name: "Bob" }, { age: 30 });
-    ```
-
--   **`delete(query)`**: Deletes a single document from the collection based on the provided query.
-
-    ```javascript
-    await userCollection.delete({ name: "Bob" });
-    ```
-
--   **`deleteMany(query)`**: Deletes multiple documents from the collection based on the provided query.
-
-    ```javascript
-    await userCollection.deleteMany({ age: { $gt: 30 } });
-    ```
-
--   **`find(query)`**: Finds multiple documents in the collection based on the provided query.
-
-    ```javascript
-    const results = await userCollection.find({ age: { $lt: 30 } });
-    console.log(results);
-    ```
-
--   **`getStorageStats()`**: Gets the storage statistics for the collection.
-
-    ```javascript
-    const stats = await userCollection.getStorageStats();
-    console.log(stats);
-    ```
-
--   **`close()`**: Closes the MongoDB connection.
-    ```javascript
-    await userCollection.close();
-    ```
+-   Base64-encoded encrypted string
 
 ## Requirements
 
 -   Node.js 16+
--   MongoDB
--   dotenv
 
 ## License
 
@@ -163,8 +92,3 @@ Contributions are welcome! Please feel free to submit a pull request or open an 
 4. Commit your changes (`git commit -m 'Add some feature'`).
 5. Push to the branch (`git push origin feature/YourFeature`).
 6. Open a pull request.
-
-## Acknowledgments
-
--   [MongoDB](https://www.mongodb.com/) for the database.
--   [dotenv](https://www.npmjs.com/package/dotenv) for environment variable management.
