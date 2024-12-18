@@ -1,6 +1,6 @@
 {
     "name": "afridho-encrypt",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "A simple AES encryption and decryption utility",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
@@ -17,5 +17,22 @@
         "@types/node": "^16.0.0",
         "@types/crypto-js": "^4.2.0",
         "typescript": "^5.1.6"
-    }
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/afridho/encrypt.git"
+    },
+    "homepage": "https://github.com/afridho/encrypt#readme",
+    "author": "afridho",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/afridho/encrypt/issues"
+    },
+    "keywords": [
+        "encryption",
+        "aes",
+        "crypto",
+        "security",
+        "afridho"
+    ]
 }
